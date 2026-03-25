@@ -1,0 +1,19 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/weekly-summary",
+      "schedule": "0 8 * * 1"
+    }
+  ],
+  "functions": {
+    "src/app/api/ocr/process/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/summaries/generate/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/telegram/webhook/route.ts": {
+      "maxDuration": 30
+    }
+  }
+}
