@@ -35,7 +35,7 @@ export default async function DashboardPage() {
           <h1 className="text-3xl font-display font-bold mb-1">
             Good morning, {profile?.name?.split(" ")[0] ?? "there"} 👋
           </h1>
-          <p className="text-white/40 text-sm">Here's your health overview — {formatDate(new Date())}</p>
+          <p className="text-white/40 text-sm">Here&apos;s your health overview — {formatDate(new Date())}</p>
         </div>
         <Link href="/upload">
           <Button variant="gold" className="gap-2">
