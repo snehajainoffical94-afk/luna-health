@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      const existing = Array.isArray(config.externals) ? config.externals : [];
+      config.externals = [...existing, "tesseract.js", "pdf-parse"];
+    }
+    return config;
+  },
 };
 
 export default nextConfig;

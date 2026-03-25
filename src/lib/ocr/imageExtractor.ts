@@ -3,9 +3,10 @@
 // Uses Tesseract.js for image-to-text
 // =============================================
 
+import { createWorker } from "tesseract.js";
+
 export async function extractTextFromImage(buffer: Buffer): Promise<string> {
-  const Tesseract = await import("tesseract.js");
-  const worker = await Tesseract.createWorker("eng");
+  const worker = await createWorker("eng");
   try {
     const { data } = await worker.recognize(buffer);
     return data.text ?? "";
