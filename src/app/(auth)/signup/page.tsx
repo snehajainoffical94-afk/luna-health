@@ -28,6 +28,11 @@ export default function SignupPage() {
     if (data.user) {
       // Create profile
       await supabase.from("profiles").insert({ user_id: data.user.id, name });
+      // If session exists, email confirmation is disabled — go straight to dashboard
+      if (data.session) {
+        router.push("/dashboard");
+        return;
+      }
       setDone(true);
     }
     setLoading(false);

@@ -34,12 +34,18 @@ export async function GET(req: NextRequest) {
   const setup = url.searchParams.get("setup");
 
   if (setup === "1") {
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL;
-    if (!appUrl) return NextResponse.json({ error: "APP_URL not set" }, { status: 500 });
+    try {
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL;
+      if (!appUrl) return NextResponse.json({ error: "APP_URL not set" }, { status: 500 });
 
-    const { setWebhook } = await import("@/lib/telegram/bot");
-    await setWebhook(`${appUrl}/api/telegram/webhook`);
-    return NextResponse.json({ success: true, webhook: `${appUrl}/api/telegram/webhook` });
+      const { setWebhook } = await import("@/lib/telegram/bot");
+      await setWebhook(`${appUrl}/api/telegram/webhook`);
+      return NextResponse.json({ success: true, webhook: `${appUrl}/api/telegram/webhook` });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error("Webhook setup error:", message);
+      return NextResponse.json({ error: message }, { status: 500 });
+    }
   }
 
   return NextResponse.json({ status: "Luna Health Telegram Webhook is active" });
