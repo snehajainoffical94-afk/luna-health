@@ -94,22 +94,20 @@ async function processBuffer(
   // Save biomarkers
   if (biomarkers.length > 0) {
     const today = new Date().toISOString().split("T")[0];
-    await admin.from("biomarkers").insert(
+    const { error: insertErr } = await admin.from("biomarkers").insert(
       biomarkers.map((b) => ({
         user_id: userId,
         upload_id: uploadId,
         marker_name: b.marker_name,
         value: b.value,
         unit: b.unit,
-        reference_range: b.ref_range_low !== null && b.ref_range_high !== null
-          ? `${b.ref_range_low}–${b.ref_range_high}`
-          : null,
         ref_range_low: b.ref_range_low,
         ref_range_high: b.ref_range_high,
         status: b.status,
         test_date: today,
       }))
     );
+    if (insertErr) throw new Error(`Biomarker save error: ${insertErr.message}`);
   }
 
   // Mark upload complete
