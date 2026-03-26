@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Activity, LayoutDashboard, Upload, FileText, Dna, Watch, User, Settings, LogOut, BarChart3, Calendar, ChevronRight } from "lucide-react";
+import { Activity, LayoutDashboard, Upload, FileText, Dna, Watch, User, Settings, LogOut, BarChart3, Calendar, ChevronRight, Sparkles } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +13,7 @@ const navItems = [
   { href: "/wearable", icon: Watch, label: "Wearable Data" },
   { href: "/anthropometric", icon: BarChart3, label: "Body Metrics" },
   { href: "/weekly-summary", icon: Calendar, label: "Weekly Summary" },
+  { href: "/ai-coach", icon: Sparkles, label: "AI Coach" },
   { href: "/profile", icon: User, label: "Profile" },
   { href: "/settings", icon: Settings, label: "Settings" },
 ];

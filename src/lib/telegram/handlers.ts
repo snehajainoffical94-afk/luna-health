@@ -173,6 +173,46 @@ export function registerHandlers(bot: Bot): void {
     }
   });
 
+  // Handle free-form text questions — route to AI Coach
+  bot.on("message:text", async (ctx: Context) => {
+    const chatId = ctx.chat?.id?.toString();
+    const text = ctx.message?.text ?? "";
+
+    // Ignore commands (already handled above)
+    if (text.startsWith("/") || !chatId) return;
+
+    // Find linked user
+    const supabase = supabaseAdmin();
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("user_id, name")
+      .eq("telegram_chat_id", chatId)
+      .single();
+
+    if (!profile) {
+      await ctx.reply(
+        "⚠️ Your Telegram is not linked to a Luna account yet.\nUse /link to get your chat ID, then add it in Settings on the website.",
+        { parse_mode: "Markdown" }
+      );
+      return;
+    }
+
+    await ctx.reply("🤔 Thinking...");
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/ai-coach`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: text, userId: profile.user_id }),
+      });
+      const data = await res.json();
+      const answer = data.answer ?? data.error ?? "Something went wrong.";
+      await ctx.reply(`🌙 *Luna AI Coach*\n\n${answer}`, { parse_mode: "Markdown" });
+    } catch {
+      await ctx.reply("❌ Couldn't reach the AI coach. Please try again.");
+    }
+  });
+
   // Handle photo uploads
   bot.on("message:photo", async (ctx: Context) => {
     const chatId = ctx.chat?.id?.toString();

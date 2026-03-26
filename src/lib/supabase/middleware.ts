@@ -37,6 +37,7 @@ export async function updateSession(request: NextRequest) {
     "/wearable",
     "/anthropometric",
     "/weekly-summary",
+    "/ai-coach",
     "/profile",
     "/settings",
   ];
