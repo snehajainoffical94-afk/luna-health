@@ -26,9 +26,9 @@ export async function generateHealthSummary(
 ): Promise<GeneratedSummary> {
   const prompt = buildHealthSummaryPrompt(input);
 
-  // Use gemini-1.5-flash — free tier, fast, accurate
+  // Use gemini-2.0-flash — free tier, fast, accurate
   const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
+    model: "gemini-2.0-flash",
     generationConfig: {
       responseMimeType: "application/json",
       maxOutputTokens: 2048,

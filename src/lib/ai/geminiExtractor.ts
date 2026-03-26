@@ -41,7 +41,7 @@ Health report data:`;
 
 export async function extractBiomarkersFromText(rawText: string): Promise<GeminiBiomarker[]> {
   const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
+    model: "gemini-2.0-flash",
     generationConfig: { responseMimeType: "application/json", maxOutputTokens: 2048, temperature: 0.1 },
   });
 
@@ -54,7 +54,7 @@ export async function extractBiomarkersFromImage(
   mimeType: "image/jpeg" | "image/png" | "image/jpg"
 ): Promise<GeminiBiomarker[]> {
   const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
+    model: "gemini-2.0-flash",
     generationConfig: { responseMimeType: "application/json", maxOutputTokens: 2048, temperature: 0.1 },
   });
 
